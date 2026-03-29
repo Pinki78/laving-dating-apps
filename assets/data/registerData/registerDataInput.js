@@ -1,28 +1,28 @@
 let IdRegister = 0;
 
 const getIdRegister = (suffix = "") => {
-    IdRegister++;
-    return `${suffix}-${IdRegister}`;
+  IdRegister++;
+  return `${suffix}-${IdRegister}`;
 };
 
 export const Profile_Register_form = [
-    {
-        id: getIdRegister("name"),
-        InputName: "name",
-        label: "Full Name",
-        type: "text",
-        errorText: "Full Name is required",
-    },
+  {
+    id: getIdRegister("name"),
+    InputName: "name",
+    label: "Full Name",
+    type: "text",
+    errorText: "Full Name is required",
+  },
 
-    {
-        id: getIdRegister("email"),
-        InputName: "email",
-        label: "Email",
-        type: "email",
-        errorText: "Email is required",
-    },
+  {
+    id: getIdRegister("email"),
+    InputName: "email",
+    label: "Email",
+    type: "email",
+    errorText: "Email is required",
+  },
 
-    {
+  {
     id: getIdRegister("gender"),
     InputName: "gender",
     label: "Gender",
@@ -54,10 +54,10 @@ export const Profile_Register_form = [
     type: "password",
     errorText: "Password is required",
   },
-    {
-        id: getIdRegister("remember"),
-        InputName: "rememberMe",
-        label: "Remember Me",
-        type: "checkbox",
-    }
+  {
+    id: getIdRegister("remember"),
+    InputName: "rememberMe",
+    label: "Remember Me",
+    type: "checkbox",
+  }
 ];

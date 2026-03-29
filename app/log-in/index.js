@@ -1,11 +1,11 @@
 import { useLayoutEffect, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
-import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import LogoText from '../../components/logo-text/logo-and-text'
 import ModuleLogIn from './login-component/log-in-module';
 
-const LogInIndex = () => {
+const LogInIndexScreen = () => {
 
 
   const insets = useSafeAreaInsets();
@@ -39,7 +39,7 @@ const LogInIndex = () => {
 
   return (
     <>
-      <SafeAreaProvider>
+     
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView style={[styles.container, { paddingTop: insets.top + 15 }]}
 
@@ -70,12 +70,12 @@ const LogInIndex = () => {
             </ScrollView>
           </SafeAreaView>
         </TouchableWithoutFeedback>
-      </SafeAreaProvider>
+      
     </>
   )
 }
 
-export default LogInIndex
+export default LogInIndexScreen
 
 const styles = StyleSheet.create({
       container: {

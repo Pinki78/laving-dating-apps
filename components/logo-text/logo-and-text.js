@@ -2,12 +2,12 @@ import { StyleSheet, Text, View, Image } from 'react-native'
 import React from 'react'
 
 const LogoText = (props) => {
-    const { LogoHeader, Summary, headerStyle, summaryStyle,logoStyle } = props;
+    const { LogoHeader, Summary, headerStyle, summaryStyle, logoStyle } = props;
     return (
         <>
             <View style={[styles.wrapplogo]}>
                 <Image source={require("../../assets/image/logo.png")} style={[
-                    styles.logo,logoStyle,
+                    styles.logo, logoStyle,
                     { width: 100, height: 100 }
                 ]}
                     accessible={true}
@@ -25,13 +25,19 @@ const LogoText = (props) => {
 export default LogoText
 
 const styles = StyleSheet.create({
-    wrapplogo:{
-        marginBottom:20,
-        textAlign:'center',
-         alignItems: 'center',
-        
+    wrapplogo: {
+        marginBottom: 20,
+        textAlign: 'center',
+        alignItems: 'center',
+
     },
-    header:{
+    header: {
         marginTop: 15,
+        fontFamily: 'Urbanist_600SemiBold',
+        fontSize: 25,
+    },
+    summary: {
+        fontSize: 14,
+        fontFamily: 'Mulish_500Medium',
     }
 })

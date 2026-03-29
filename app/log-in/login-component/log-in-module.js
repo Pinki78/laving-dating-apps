@@ -7,7 +7,7 @@ const ModuleLogIn = () => {
         <>
             <LoginFrom />
             <ContinueWith
-            textUsesrNameLink="Sign Up" headerText="Or Continue With"
+            textUsesrNameLink="Sign Up" headerText="Or"
             handlePressurl="creating-new-users"
             />
         </>

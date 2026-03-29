@@ -1,0 +1,195 @@
+@charset "utf-8";
+/* CSS Document */
+body { background: transparent; }
+#channelveilinfo {
+     position: fixed;
+     right: 0px;
+     width: 100%;
+     background: rgba(0, 0, 0, 0.75);;
+	-moz-transition: all 2s ease;
+	-webkit-transition: all 2s ease; 
+	-o-transition: all 2s ease;
+	transition: all 2s ease;
+	padding:20px 0;
+	bottom: -100px;
+}
+
+#channel_popup {
+	color: white;
+    font-family: "Verdana";
+    text-align: right;
+    font-size: 20pt;
+    width: auto;
+	float:left;
+	margin:0px;
+	padding:0px 10px 0px 40px;
+}
+#channel_info {
+	color: white;
+    font-family: "Verdana";
+    text-align: left;
+    font-size: 20pt;
+    width: auto;
+	float:left;
+	margin:0px;
+	padding:0px 0px 0px 20px;
+	border-left:1px solid white;
+}
+
+#channel_menu {
+        position: top;
+        top: 10px;
+        left: 70px;
+        height: 100px;
+        width: 100px;
+        border: 1px;
+/*      background: green;
+        background: grey;
+        visibility: hidden;*/
+}
+
+table.menutable {
+        border: 0px;
+        padding: 0px;
+}
+
+td.menuheader {
+        font-weight: bold;
+        text-align: left;
+        background: #0000AF;
+        font-size: 16px;
+        color: yellow;
+}
+
+td.spacer {
+        padding: 2px;
+}
+
+td.menuitem {
+        background: #0000AF;
+        color: yellow;
+        font-size: 14px;
+}
+
+td.menuselected {
+        background: yellow;
+        color: blue;
+        font-size: 14px;
+}
+
+.box {
+    background: none repeat scroll 0 0 #ffad00;
+    border: 2px groove #000000;
+    border-collapse: collapse;
+    height: 50%;
+    margin: auto;
+    padding: 31px;
+    width: 550px;
+        border-radius:10px;
+}
+.bottom{
+        margin-top:2%;
+}
+
+.ch-number {
+	position:fixed;
+	right:20px;
+	top:20px;
+	padding:0 10px 0 10px;
+	display:none;
+	outline: none;
+	background: rgba(0, 0, 0, 0);
+}
+.ch-number #ch-input {
+	width:auto;
+	float:right;
+	border:0;
+	background:none;
+	color:#FFF;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:39px;
+	font-weight:bold;
+	text-align:right;
+	text-shadow:2px 2px 2px #fff;
+	outline: none;
+}
+/******************************Volume Control *****************************/
+.sound-barback {
+	width:60px;
+	height:405px;
+	margin:0;
+	padding:0;
+	background:#252525;
+	opacity:0.9;
+	z-index:9999;
+	right:3%;
+	top:18%;
+	text-align:center;
+	border-radius:5px;
+	position:absolute;
+	border:2px solid #000000;
+	box-shadow:0 0 5px #FFF;
+}
+.sound-box {
+	width:99%;
+	float:left;
+	padding:7px 0 0 0;
+	text-align:center;
+}
+.sound-bar {
+	width:20px;
+	height:300px;
+	margin:0 auto;
+	position:absolute;
+	top:65px;
+	left:0;
+	right:0;
+}
+.sound-barback .vl-barback {
+	width:13px;
+	height:100%;
+	position:absolute;
+	margin:0 auto;
+	padding:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:99;
+	border-radius:10px;
+	background: #000000;
+}
+.sound-barback .vl-bar {
+	width:13px;
+	position:absolute;
+	margin:0 auto;
+	padding:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index:100;
+	border-radius:10px;
+	background: #b46801;
+	background: -moz-linear-gradient(left, #b46801 0%, #e5cc22 100%);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#b46801), color-stop(100%,#e5cc22));
+	background: -webkit-linear-gradient(left, #b46801 0%,#e5cc22 100%);
+	background: -o-linear-gradient(left, #b46801 0%,#e5cc22 100%); 
+	background: -ms-linear-gradient(left, #b46801 0%,#e5cc22 100%);
+	background: linear-gradient(to right, #b46801 0%,#e5cc22 100%);
+}
+.vl-count {
+	width:100%;
+	position:absolute;
+	bottom:2px;
+	left:0;
+	right:0;
+	margin:0;
+	padding:0;
+	text-align:center;
+	font-size:28px;
+	line-height:35px;
+	font-weight:normal;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#FFF;
+	text-shadow:0 0 2px #000;
+} 
+/******************************Volume Control *****************************/

@@ -3,59 +3,75 @@ import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useDispatch , useSelector } from "react-redux";
 
-import GetStartedIndex from "../../../app/get-started";
-import LogInIndex from "../../../app/log-in";
-// import CreatingNewUsersIndex from "../../creating-new-users";
-// import PreferListIndex from "../../prefer-list";
-// import YourInterestsIndex from "../../your-interests";
-// import LocationIndex from "../../location";
-// import UploadPhotoScreen from "../../upload-your-photo";
+import GetStartedIndexScreen from "../../../app/get-started";
+import LogInIndexScreen from "../../../app/log-in";
+import CreatingNewUsersIndexScreen from "../../../app/creating-new-users";
+
+import PreferListIndex from "../../../app/preferences-pick";
+import InterestsPickIndex from "../../../app/interests-pick";
+import UploadPhotoScreenIndex from "../../../app/upload-your-photo";
+import LocationPickIndex from "../../../app/location-pick";
 
 const AuthStack = createNativeStackNavigator();
 
 const AuthStackApp = () => {
 
-//  const dispatch = useDispatch();
+ const dispatch = useDispatch();
 
 
-//   const { hasOpenedAppBefore  } = useSelector(
-//     (state) => state.goHomesliceHandlerStore
-//   );
+    const {  onboardingComplete, hasOpenedAppBefore} =
+    useSelector((state) => state.authReducerStore);
 
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }} 
     // initialRouteName={
-    //     hasOpenedAppBefore ? "log-in" : "GetStartedIndex"
+    //     hasOpenedAppBefore ? "log-in" : "get-started"
     //   }
+    // initialRouteName={
+    //     !hasOpenedAppBefore
+    //       ? "get-started"
+    //       : !onboardingComplete
+    //       ? "preferences-pick"   // 🔥 KEY LINE
+    //       : "log-in"
+    //   }
+
+initialRouteName={
+        hasOpenedAppBefore ? "log-in" : "get-started"
+      }
+
       >
       <AuthStack.Screen
         name="get-started"
-        component={GetStartedIndex}
+        component={GetStartedIndexScreen}
       />
       <AuthStack.Screen
         name="log-in"
-        component={LogInIndex}
-      />
-      {/* <AuthStack.Screen
-        name="creating-new-users"
-        component={CreatingNewUsersIndex}
-      /> */}
-     {/*  <AuthStack.Screen
-        name="prefer-list"
-        component={PreferListIndex}
+        component={LogInIndexScreen}
       />
       <AuthStack.Screen
-        name="your-interests"
-        component={YourInterestsIndex}
+        name="creating-new-users"
+        component={CreatingNewUsersIndexScreen}
+      />
+
+     {/* <AuthStack.Screen
+        name="preferences-pick"
+        component={PreferListIndex}
+      /> */}
+       {/* <AuthStack.Screen
+        name="interests-pick"
+        component={InterestsPickIndex}
       />
       <AuthStack.Screen
         name="upload-your-photo"
-        component={UploadPhotoScreen}
+        component={UploadPhotoScreenIndex}
       />
       <AuthStack.Screen
-        name="location"
-        component={LocationIndex}
-      /> */}
+        name="location-pick"
+        component={LocationPickIndex}
+      />  */}
+
+
+      
     </AuthStack.Navigator>
   );
 };

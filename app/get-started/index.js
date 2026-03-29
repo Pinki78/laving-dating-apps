@@ -3,7 +3,7 @@ import LetsYouIn from './com-get-started/lets-you-in'
 // import COLORS from '../assets/style/color'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-const GetStartedIndex = () => {
+const GetStartedIndexScreen = () => {
   return (
     <>
       <SafeAreaView style={[styles.container , styles.LetYouIn]}>
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default GetStartedIndex
+export default GetStartedIndexScreen

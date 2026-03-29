@@ -36,6 +36,7 @@
           "calendarPermission": "The app needs to access your calendar."
         }
       ],
+      
       [
         "expo-image-picker",
         {
@@ -50,7 +51,8 @@
           }
         }
       ],
-      "expo-router"
+      "expo-router",
+      "expo-maps"
     ]
   }
 }
