@@ -70,12 +70,14 @@ export const saveUserLocationThunk = createAsyncThunk(
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "_");
 
+      const customId = `${emailId}_${user.uid}`;
+
       console.log("Saving for:", emailId);
       console.log("USER:", auth.currentUser);
       const ref = doc(
         db,
         "users",
-        emailId,
+        customId,
         "profileDataUser",
         "myUserprofile"
       );

@@ -28,14 +28,14 @@ import {
   setShow,
   setOpenSelect,
   setShowPassword,
-  createUser 
+  createUser
 } from "../../../assets/react-redux-store/store-component/user-new-form-slice";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Alert } from "react-native";
-import {setOnboardingComplete, setHasOpenedAppBefore, setIsAuthenticated } from "../../../assets/react-redux-store/store-component/auth-slice";
-import { auth , db} from "../../../assets/firebase/firebaseConfig";
-import { doc, setDoc, getDoc, serverTimestamp  } from "firebase/firestore";
+import { setOnboardingComplete, setHasOpenedAppBefore, setIsAuthenticated, setIsSigningUp } from "../../../assets/react-redux-store/store-component/auth-slice";
+import { auth, db } from "../../../assets/firebase/firebaseConfig";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
 
@@ -49,7 +49,7 @@ const NewUserForm = () => {
   const { usersCreateForm, show, openSelect, showPassword, loading } =
     useSelector((state) => state.SignupReducerStore);
 
-    const { isAuthenticated, onboardingComplete } =
+  const { isAuthenticated, isSigningUp, onboardingComplete } =
     useSelector((state) => state.authReducerStore);
 
   useEffect(() => {
@@ -128,36 +128,28 @@ const NewUserForm = () => {
           validateOnBlur={true}
           validateOnChange={false}
           onSubmit={async (values, { resetForm }) => {
-  try {
-    const user = await dispatch(createUser(values)).unwrap();
+            try {
+              dispatch(setIsSigningUp(true)); // ✅ START BLOCK
 
-    if (!user?.uid) throw new Error("Signup failed");
+              const user = await dispatch(createUser(values)).unwrap();
 
-    // ✅ SAME email-based docId
-    // const docId = values.email.trim().replace(/[^a-zA-Z0-9]/g, "_");
+              if (!user?.uid) throw new Error("Signup failed");
 
-    // const userRef = doc(db, "users", docId);
+              resetForm();
 
-    // await setDoc(
-    //   userRef,
-    //   { onboardingComplete: false },
-    //   { merge: true }
-    // );
+              navigation.replace("log-in");
 
-    resetForm();
-    navigation.replace("log-in");
+              await signOut(auth);
 
-    dispatch(setIsAuthenticated(false));
-dispatch(setOnboardingComplete(false));
+              dispatch(setHasOpenedAppBefore(true));
+              dispatch(setIsSigningUp(false)); // ✅ END BLOCK
 
-    // dispatch(setHasOpenedAppBefore(true));
-    // dispatch(setIsAuthenticated(false));
+            } catch (error) {
+              dispatch(setIsSigningUp(false));
+              Alert.alert("Signup Error", error.message);
+            }
+          }}
 
-  } catch (error) {
-    console.log("Signup Error:", error);
-    Alert.alert("Signup Error", error.message);
-  }
-}}
         >
           {({
             values,
@@ -187,7 +179,7 @@ dispatch(setOnboardingComplete(false));
                           (touched[field.id] || submitCount > 0) &&
                           errors[field.id] && { borderColor: "red" }
                         ]}
-                         onBlur={handleBlur(field.id)}
+                        onBlur={handleBlur(field.id)}
                         onPress={() =>
                           dispatch(
                             setOpenSelect(
@@ -218,7 +210,7 @@ dispatch(setOnboardingComplete(false));
                             <Pressable
                               key={option.value}
                               style={styles.option}
-                               onBlur={handleBlur(field.id)}
+                              onBlur={handleBlur(field.id)}
                               onPress={() => {
                                 setFieldValue(field.id, option.value);
                                 setFieldTouched(field.id, true);   // ⭐ add this
@@ -290,7 +282,7 @@ dispatch(setOnboardingComplete(false));
                           (touched[field.id] || submitCount > 0) &&
                           errors[field.id] && { borderColor: "red" }
                         ]}
-                         onBlur={handleBlur(field.id)}
+                        onBlur={handleBlur(field.id)}
                         onPress={() => {
                           setFieldTouched(field.id, true);
                           dispatch(setShow(true));
@@ -334,7 +326,7 @@ dispatch(setOnboardingComplete(false));
                   return (
                     <View key={field.id} style={styles.inputWrapper}>
                       <TextInput
-                         style={[
+                        style={[
                           styles.input,
                           (touched[field.id] || submitCount > 0) &&
                           errors[field.id] && { borderColor: "red" }
@@ -353,11 +345,11 @@ dispatch(setOnboardingComplete(false));
                         }}
                       />
 
-                        {touched[field.id] && errors[field.id] && (
-                      <Text style={styles.error}>
-                        {errors[field.id]}
-                      </Text>
-                    )}
+                      {touched[field.id] && errors[field.id] && (
+                        <Text style={styles.error}>
+                          {errors[field.id]}
+                        </Text>
+                      )}
                     </View>
                   );
                 }
@@ -392,8 +384,8 @@ dispatch(setOnboardingComplete(false));
 
               })}
 
-              <PressableIconButtonGradient  ButtonTitle={loading ? "Please wait..." : "Create User"}
-               onPress={handleSubmit} />
+              <PressableIconButtonGradient ButtonTitle={loading ? "Please wait..." : "Create User"}
+                onPress={handleSubmit} />
 
             </View>
           )}

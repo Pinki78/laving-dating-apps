@@ -100,12 +100,12 @@ const PickeLocation = () => {
     dispatch(setLocationAdded(true));
     dispatch(setShowBtn(true));
     dispatch(
-    saveUserLocationThunk({
-      // parentDocId: "USER_ID_HERE", // 🔴 replace with real user uid
-      region,
-      address,
-    })
-  );
+      saveUserLocationThunk({
+        // parentDocId: "USER_ID_HERE", // 🔴 replace with real user uid
+        region,
+        address,
+      })
+    );
     // optional: AsyncStorage save here
   };
 
@@ -113,48 +113,52 @@ const PickeLocation = () => {
 
 
   return (
-    <View style={styles.LocationWrapper}>
-      {/* Initial */}
-      {!region && !locationAdded && !loading && (
-        <>
-          <Image
-            source={require("../../../assets/image/icon/location.png")}
-            style={styles.image}
-            resizeMode="contain"
-          />
-          <PressableIconButtonGradient
-            ButtonTitle="Allow Location Access"
-            onPress={getCurrentLocation}
-            PressableClass={styles.pressable}
-          />
+    <>
 
-        </>
-      )}
 
-      {/* Loading */}
-      {loading && (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#E91E63" />
-          <Text style={styles.loadingText}>Fetching your location...</Text>
-        </View>
-      )}
 
-      {/* Map */}
-      {region && !locationAdded && !loading && (
-        <>
+      <View style={styles.LocationWrapper}>
+        {/* Initial */}
+        {!region && !locationAdded && !loading && (
+          <>
+            <Image
+              source={require("../../../assets/image/icon/location.png")}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <PressableIconButtonGradient
+              ButtonTitle="Allow Location Access"
+              onPress={getCurrentLocation}
+              PressableClass={styles.pressable}
+            />
 
-          <View style={[styles.mapWrapper, { flex: 1 } ]}>
-            <MapView style={styles.map}
-            
-              onRegionChangeComplete={handleRegionChange}
-              region={region} showsUserLocation>
-              <Marker coordinate={region}
-             />
-            </MapView>
+          </>
+        )}
+
+        {/* Loading */}
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#E91E63" />
+            <Text style={styles.loadingText}>Fetching your location...</Text>
           </View>
+        )}
+
+        {/* Map */}
+        {region && !locationAdded && !loading && (
+          <>
+
+            <View style={[styles.mapWrapper, { flex: 1 }]}>
+              <MapView style={styles.map}
+
+                onRegionChangeComplete={handleRegionChange}
+                region={region} showsUserLocation>
+                <Marker coordinate={region}
+                />
+              </MapView>
+            </View>
 
 
-          {/* <MapView
+            {/* <MapView
             style={{ flex: 1 }}
             region={region}
             onRegionChangeComplete={handleRegionChange}
@@ -162,43 +166,46 @@ const PickeLocation = () => {
             <Marker coordinate={region} />
           </MapView> */}
 
-          {address && (
-            <View style={styles.addressBox}>
-              <Text style={styles.addressText}>
-                {[
-                  address.houseNo?.trim() || null,
-                  address.plotNo?.trim() ? `Plot ${address.plotNo.trim()}` : null,
-                  address.premisesNo?.trim() || null,
-                  address.city || null,
-                  address.district &&
-                    address.district.toLowerCase() !== address.city?.toLowerCase()
-                    ? address.district
-                    : null,
-                  address.state || null,
-                ]
-                  .filter(Boolean)
-                  .join(", ")}
-              </Text>
+            {address && (
+              <View style={styles.addressBox}>
+                <Text style={styles.addressText}>
+                  {[
+                    address.houseNo?.trim() || null,
+                    address.plotNo?.trim() ? `Plot ${address.plotNo.trim()}` : null,
+                    address.premisesNo?.trim() || null,
+                    address.city || null,
+                    address.district &&
+                      address.district.toLowerCase() !== address.city?.toLowerCase()
+                      ? address.district
+                      : null,
+                    address.state || null,
+                  ]
+                    .filter(Boolean)
+                    .join(", ")}
+                </Text>
 
-              <Text style={styles.addressSubText}>
-                {[address.pin, address.country].filter(Boolean).join(", ")}
-              </Text>
-            </View>
-          )}
+                <Text style={styles.addressSubText}>
+                  {[address.pin, address.country].filter(Boolean).join(", ")}
+                </Text>
+              </View>
+            )}
 
-          <PressableIconButtonGradient
-            ButtonTitle="Confirm Location"
-            PressableClass={styles.pressable}
-            onPress={addLocationHandler}
-          />
-        </>
-      )}
+            <PressableIconButtonGradient
+              ButtonTitle="Confirm Location"
+              PressableClass={styles.pressable}
+              onPress={addLocationHandler}
+            />
+          </>
+        )}
+
+
+      </View>
 
       {/* Final */}
       {locationAdded && address && !loading && (
         <EditLocation />
       )}
-    </View>
+    </>
   );
 };
 

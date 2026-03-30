@@ -59,8 +59,10 @@ export const savePhoto = createAsyncThunk(
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "_");
 
+      const customId = `${emailId}_${user.uid}`;
+      
       await setDoc(
-        doc(db, "users", emailId, "profileDataUser", "myUserprofile"),
+        doc(db, "users", customId, "profileDataUser", "myUserprofile"),
         {
           photos: selectedPhotos, // ✅ CORRECT FIELD
           updatedAt: serverTimestamp(),

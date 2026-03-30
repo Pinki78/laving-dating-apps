@@ -38,7 +38,7 @@ const LoginFrom = () => {
   const { loading, showPasswordLogin } = useSelector(
     (state) => state.LogInUserReducerStore
   );
-    const { isAuthenticated, onboardingComplete} =
+  const { isAuthenticated, onboardingComplete } =
     useSelector((state) => state.authReducerStore);
 
   const {
@@ -52,47 +52,8 @@ const LoginFrom = () => {
 
 
 
-// const onSubmit = async ({ identity, password }) => {
-//   try {
-//     dispatch(setLoading(true));
 
-//     const userCredential = await signInWithEmailAndPassword(
-//       auth,
-//       identity.trim().toLowerCase(),
-//       password
-//     );
-
-//     const user = userCredential.user;
-
-// // ✅ FIXED
-// const docId = user.uid;
-
-// const userRef = doc(db, "users", docId);
-// const userSnap = await getDoc(userRef);
-
-// if (!userSnap.exists()) {
-//   throw new Error("User data not found in Firestore");
-// }
-
-//     const userData = userSnap.data();
-
-//     // ✅ IMPORTANT FIX
-//     if (!userData.onboardingComplete) {
-//       navigation.replace("preferences-pick");   // 👈 go to onboarding
-//     } else {
-//       dispatch(setIsAuthenticated(true));       // 👈 go to home via navigator
-//     }
-
-//   } catch (error) {
-//     console.log(error);
-//     Alert.alert("Error", error.message);
-//   } finally {
-//     dispatch(setLoading(false));
-//   }
-// };
-
-
-const onSubmit = async ({ identity, password }) => {
+  const onSubmit = async ({ identity, password }) => {
   try {
     dispatch(setLoading(true));
 
@@ -104,10 +65,23 @@ const onSubmit = async ({ identity, password }) => {
       password
     );
 
-    // ✅ SAME emailId logic (VERY IMPORTANT)
-    const emailId = email.replace(/[^a-zA-Z0-9]/g, "_");
+    const user = userCredential.user; // ✅ IMPORTANT
+ 
+// ✅ MATCH signup logic exactly
+const emailId = user.email
+  .trim()
+  .toLowerCase()
+  .replace(/[^a-zA-Z0-9]/g, "_");
 
-    const userSnap = await getDoc(doc(db, "users", emailId));
+const docId = `${emailId}_${user.uid}`;
+
+const userSnap = await getDoc(
+  doc(db, "users", docId)
+);
+
+//     const userSnap = await getDoc(
+//       doc(db, "users", user.uid)      // ✅ FIXED
+//     );
 
     if (!userSnap.exists()) {
       throw new Error("User data not found");
@@ -115,9 +89,11 @@ const onSubmit = async ({ identity, password }) => {
 
     const userData = userSnap.data();
 
-    dispatch(setOnboardingComplete(userData.onboardingComplete ?? false));
+    const onboardingComplete = userData?.onboardingComplete;
 
-    if (!userData.onboardingComplete) {
+    dispatch(setOnboardingComplete(onboardingComplete));
+
+    if (!onboardingComplete) {
       navigation.replace("preferences-pick");
     } else {
       dispatch(setIsAuthenticated(true));
@@ -125,11 +101,12 @@ const onSubmit = async ({ identity, password }) => {
 
   } catch (error) {
     Alert.alert("Login Error", error.message);
+    console.log("Login Error", error.message);
+    
   } finally {
     dispatch(setLoading(false));
   }
 };
-
 
 
   return (
@@ -165,7 +142,7 @@ const onSubmit = async ({ identity, password }) => {
                 value={value}
                 onChangeText={onChange}
               />
-              <Pressable  onPress={() => dispatch(setShowPasswordLogin(!showPasswordLogin))} style={{ marginRight: 12 }}>
+              <Pressable onPress={() => dispatch(setShowPasswordLogin(!showPasswordLogin))} style={{ marginRight: 12 }}>
                 <Ionicons name={showPasswordLogin ? "eye-off-outline" : "eye-outline"} size={20} color="#999" />
               </Pressable>
             </View>

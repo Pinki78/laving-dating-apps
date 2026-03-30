@@ -13,13 +13,21 @@ const authSliceHandler = createSlice({
     initialState: {
         loading: false,
         error: null,
-        onboardingComplete: false, // ✅ IMPORTANT
+        onboardingComplete: null,
         isAuthenticated: null,
-        hasOpenedAppBefore: false, // 👈 add this
+        hasOpenedAppBefore: false,
+        authChecked: false, // ✅ ADD THIS
+        isSigningUp: false, // ✅ ADD THIS
     },
     reducers: {
+        setIsSigningUp: (state, action) => {
+            state.isSigningUp = action.payload;
+        },
         setIsAuthenticated: (state, action) => {
             state.isAuthenticated = action.payload;
+        },
+        setAuthChecked: (state, action) => {
+            state.authChecked = action.payload;
         },
         setHasOpenedAppBefore: (state, action) => {
             state.hasOpenedAppBefore = action.payload;
@@ -27,14 +35,14 @@ const authSliceHandler = createSlice({
         setLoading(state, action) {
             state.loading = action.payload;
         },
-         setOnboardingComplete: (state, action) => {
-      state.onboardingComplete = action.payload;
-    },
+        setOnboardingComplete: (state, action) => {
+            state.onboardingComplete = action.payload;
+        },
     },
 
 
 })
 
-export const { setIsAuthenticated, setHasOpenedAppBefore, setLoading , setOnboardingComplete} = authSliceHandler.actions;
+export const { setIsSigningUp, setIsAuthenticated, setAuthChecked, setHasOpenedAppBefore, setLoading, setOnboardingComplete } = authSliceHandler.actions;
 
 export default authSliceHandler.reducer;

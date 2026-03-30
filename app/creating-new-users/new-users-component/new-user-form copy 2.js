@@ -28,14 +28,14 @@ import {
   setShow,
   setOpenSelect,
   setShowPassword,
-  createUser 
+  createUser
 } from "../../../assets/react-redux-store/store-component/user-new-form-slice";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Alert } from "react-native";
-import { setHasOpenedAppBefore, setIsAuthenticated } from "../../../assets/react-redux-store/store-component/auth-slice";
-import { auth , db} from "../../../assets/firebase/firebaseConfig";
-import { doc, setDoc, getDoc, serverTimestamp  } from "firebase/firestore";
+import { setOnboardingComplete, setHasOpenedAppBefore, setIsAuthenticated, setIsSigningUp } from "../../../assets/react-redux-store/store-component/auth-slice";
+import { auth, db } from "../../../assets/firebase/firebaseConfig";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 
 
@@ -49,7 +49,7 @@ const NewUserForm = () => {
   const { usersCreateForm, show, openSelect, showPassword, loading } =
     useSelector((state) => state.SignupReducerStore);
 
-    const { isAuthenticated, onboardingComplete } =
+  const { isAuthenticated, isSigningUp, onboardingComplete } =
     useSelector((state) => state.authReducerStore);
 
   useEffect(() => {
@@ -128,44 +128,28 @@ const NewUserForm = () => {
           validateOnBlur={true}
           validateOnChange={false}
           onSubmit={async (values, { resetForm }) => {
-              try {
-                  // 🔥 Create user
-                  const user = await dispatch(createUser(values)).unwrap();
+            try {
+              dispatch(setIsSigningUp(true)); // ✅ START BLOCK
 
-                  if (!user || !user.uid) {
-                    throw new Error("User not created properly");
-                  }
+              const user = await dispatch(createUser(values)).unwrap();
 
-                  const userRef = doc(db, "users", user.uid);
+              if (!user?.uid) throw new Error("Signup failed");
 
-                  // ✅ Save data safely (NO overwrite issue)
-                  await setDoc(
-                    userRef,
-                    {
-                      onboardingComplete: false, // ✅ put FIRST
-                      ...values,
-                    },
-                    { merge: true } // ✅ important
-                  );
+              resetForm();
 
-                  // ✅ DEBUG: check saved data
-                  const snap = await getDoc(userRef);
-                  console.log("Saved Firestore Data:", snap.data());
+              navigation.replace("log-in");
 
-                  // ✅ Logout after signup
-                  await signOut(auth);
+              await signOut(auth);
 
-                  resetForm();
-                  navigation.replace("log-in");
-                  // ✅ CONTROL NAVIGATION VIA STATE
-                  dispatch(setHasOpenedAppBefore(true)); // 👈 important
-                  dispatch(setIsAuthenticated(false));
+              dispatch(setHasOpenedAppBefore(true));
+              dispatch(setIsSigningUp(false)); // ✅ END BLOCK
 
-                } catch (error) {
-                  console.log("Signup Error:", error);
-                  Alert.alert("Signup Error", error.message);
-                }
-            }}
+            } catch (error) {
+              dispatch(setIsSigningUp(false));
+              Alert.alert("Signup Error", error.message);
+            }
+          }}
+
         >
           {({
             values,
@@ -195,7 +179,7 @@ const NewUserForm = () => {
                           (touched[field.id] || submitCount > 0) &&
                           errors[field.id] && { borderColor: "red" }
                         ]}
-                         onBlur={handleBlur(field.id)}
+                        onBlur={handleBlur(field.id)}
                         onPress={() =>
                           dispatch(
                             setOpenSelect(
@@ -226,7 +210,7 @@ const NewUserForm = () => {
                             <Pressable
                               key={option.value}
                               style={styles.option}
-                               onBlur={handleBlur(field.id)}
+                              onBlur={handleBlur(field.id)}
                               onPress={() => {
                                 setFieldValue(field.id, option.value);
                                 setFieldTouched(field.id, true);   // ⭐ add this
@@ -298,7 +282,7 @@ const NewUserForm = () => {
                           (touched[field.id] || submitCount > 0) &&
                           errors[field.id] && { borderColor: "red" }
                         ]}
-                         onBlur={handleBlur(field.id)}
+                        onBlur={handleBlur(field.id)}
                         onPress={() => {
                           setFieldTouched(field.id, true);
                           dispatch(setShow(true));
@@ -342,7 +326,7 @@ const NewUserForm = () => {
                   return (
                     <View key={field.id} style={styles.inputWrapper}>
                       <TextInput
-                         style={[
+                        style={[
                           styles.input,
                           (touched[field.id] || submitCount > 0) &&
                           errors[field.id] && { borderColor: "red" }
@@ -361,11 +345,11 @@ const NewUserForm = () => {
                         }}
                       />
 
-                        {touched[field.id] && errors[field.id] && (
-                      <Text style={styles.error}>
-                        {errors[field.id]}
-                      </Text>
-                    )}
+                      {touched[field.id] && errors[field.id] && (
+                        <Text style={styles.error}>
+                          {errors[field.id]}
+                        </Text>
+                      )}
                     </View>
                   );
                 }
@@ -400,8 +384,8 @@ const NewUserForm = () => {
 
               })}
 
-              <PressableIconButtonGradient  ButtonTitle={loading ? "Please wait..." : "Create User"}
-               onPress={handleSubmit} />
+              <PressableIconButtonGradient ButtonTitle={loading ? "Please wait..." : "Create User"}
+                onPress={handleSubmit} />
 
             </View>
           )}

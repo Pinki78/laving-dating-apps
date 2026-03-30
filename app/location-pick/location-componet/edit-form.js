@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View , TextInput, Pressable} from 'react-native'
+import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native'
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 import {
   setEditFrom,
   setShowBtn,
-setAddress,
- saveUserLocationThunk
+  setAddress,
+  saveUserLocationThunk
 } from "../../../assets/react-redux-store/store-component/location-data-picke-slice";
 import PressableIconButtonGradient from '../../../components/button/pressable-gradient-icon-button';
 
@@ -19,7 +19,7 @@ const EditForm = (props) => {
     (state) => state.LocationReducerStore
   );
 
- // ✅ Local editable state
+  // ✅ Local editable state
   const [form, setForm] = useState({
     houseNo: "",
     plotNo: "",
@@ -55,30 +55,30 @@ const EditForm = (props) => {
   };
 
   // ✅ Save updated data
- const saveHandler = () => {
-  if (!form.houseNo.trim()) {
-    alert("House No is required!");
-    return;
-  }
+  const saveHandler = () => {
+    if (!form.houseNo.trim()) {
+      alert("House No is required!");
+      return;
+    }
 
-  const updatedAddress = {
-    ...address,
-    ...form,
+    const updatedAddress = {
+      ...address,
+      ...form,
+    };
+
+    // ✅ Redux update
+    dispatch(setAddress(updatedAddress));
+    dispatch(setEditFrom(false));
+    dispatch(setShowBtn(true));
+
+    // ✅ Firebase update
+    dispatch(
+      saveUserLocationThunk({
+        region,
+        address: updatedAddress,
+      })
+    );
   };
-
-  // ✅ Redux update
-  dispatch(setAddress(updatedAddress));
-  dispatch(setEditFrom(false));
-  dispatch(setShowBtn(true));
-
-  // ✅ Firebase update
-  dispatch(
-    saveUserLocationThunk({
-      region,
-      address: updatedAddress,
-    })
-  );
-};
 
   const closeHandler = () => {
 
@@ -166,8 +166,6 @@ const EditForm = (props) => {
           />
         </View>
 
-
-
         <View>
           <Text style={styles.label}>Pin Code</Text>
 
@@ -182,13 +180,11 @@ const EditForm = (props) => {
         </View>
 
         <View style={styles.row}>
-
-
           <PressableIconButtonGradient
             ButtonTitle="Save"
-            PressableClass={styles.pressable}
-
+            gradientClass={styles.gradientClass}
             onPress={saveHandler}
+             ButtonTitleClass={styles.ButtonTitleClass}
 
           />
 
@@ -234,7 +230,8 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10
+    marginTop: 10,
+    alignItems:"center"
   },
 
   cancel: {
@@ -242,10 +239,17 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
 
-  pressable: {
-    width: '50%',
-    fontSize: 16,
-    fontWeight: "600"
+  gradientClass: {
+    // paddingVertical: 0,
+    // paddingHorizontal:0,
+
+    paddingVertical: 5,
+    paddingHorizontal:22,
+  },
+
+  ButtonTitleClass:{
+    fontSize: 14,
+    fontWeight: "600",
   }
 
 });

@@ -17,12 +17,14 @@ export const saveInterests = createAsyncThunk(
       if (!user) throw new Error("User not logged in");
 
     //   const parentDocId = `${user.email}_${user.uid}`;
-const emailId = user.email
+      const emailId = user.email
         .trim()
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "_");
+
+      const customId = `${emailId}_${user.uid}`;
       await setDoc(
-        doc(db, "users", emailId, "profileDataUser", "myUserprofile"),
+        doc(db, "users", customId, "profileDataUser", "myUserprofile"),
         {
           interests: selectedInterests,
           updatedAt: serverTimestamp(),

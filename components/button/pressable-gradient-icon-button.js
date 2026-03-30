@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable , Image } from 'react-native'
+import { StyleSheet, Text, Pressable, Image } from 'react-native'
 import { Ionicons } from "@expo/vector-icons"; // works on both
 import { LinearGradient } from "expo-linear-gradient";
 import { Platform } from "react-native";
@@ -9,7 +9,7 @@ import { Platform } from "react-native";
 
 const PressableIconButtonGradient = (props) => {
 
-  const { PressableClass, ButtonTitleClass ,ButtonTitle, onPress, imageClass, imageSource, iconName, ClassiconName, altText } = props;
+  const { PressableClass, ButtonTitleClass, ButtonTitle, onPress, imageClass, gradientClass, imageSource, iconName, ClassiconName, altText } = props;
 
   return (
     <>
@@ -18,7 +18,7 @@ const PressableIconButtonGradient = (props) => {
         android_ripple={{ color: "#ffffff40" }}
         style={({ pressed }) => [
           styles.wrapper,
-         PressableClass,
+          PressableClass,
           pressed && styles.pressed,
           Platform.OS === "ios" && pressed && { opacity: 0.8 }, // 👈 opacity 0.8 on iOS
         ]}
@@ -27,13 +27,14 @@ const PressableIconButtonGradient = (props) => {
           colors={["#E44358", "#F32944"]}
           start={{ x: 1, y: 0 }}
           end={{ x: 0, y: 0 }}
-          style={styles.gradient}
+          style={[styles.gradient, gradientClass]}
+
         >
           {imageSource ? (
-          <Image source={imageSource} accessible={true} accessibilityLabel={altText}  style={[styles.image , imageClass ]} />
-        ) : iconName ? (
-          <Ionicons name={iconName} size={20} color="#fff" style={[styles.icon , ClassiconName ]}  />
-        ) : null}
+            <Image source={imageSource} accessible={true} accessibilityLabel={altText} style={[styles.image, imageClass]} />
+          ) : iconName ? (
+            <Ionicons name={iconName} size={20} color="#fff" style={[styles.icon, ClassiconName]} />
+          ) : null}
 
           <Text style={[styles.text, ButtonTitleClass]}>{ButtonTitle}</Text>
         </LinearGradient>
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
   },
   gradient: {
     paddingVertical: 16,
+    // paddingHorizontal: 25,
     alignItems: "center",
     borderRadius: 30,
   },
@@ -64,10 +66,10 @@ const styles = StyleSheet.create({
   text: {
     color: "#fff",
     fontWeight: "600",
-     fontFamily: 'Urbanist_600SemiBold',
-        fontSize: 18,
+    fontFamily: 'Urbanist_600SemiBold',
+    fontSize: 18,
   },
-   image: {
+  image: {
     width: 20,
     height: 20,
     marginRight: 8,

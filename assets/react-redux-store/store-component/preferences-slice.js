@@ -18,28 +18,28 @@ export const savePreferences = createAsyncThunk(
       const user = auth.currentUser;
       if (!user) throw new Error("User not logged in");
 
-      // const parentDocId = `${user.email}_${user.uid}`;
-
-
-const emailId = user.email
+      // ✅ FIX: use user.email (NOT data.email)
+      const emailId = user.email
         .trim()
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "_");
 
+      const customId = `${emailId}_${user.uid}`;
+
       // ✅ SAVE TO FIRESTORE
       await setDoc(
-            // doc(db, "users", parentDocId, "profileDataUser","myUserprofile"),
-            doc(db, "users", emailId, "profileDataUser", "myUserprofile"),
-            {
-                preferences: selectedPreferences,
-                updatedAt: serverTimestamp(),
-            },
-            { merge: true }
-    );
+        doc(db, "users", customId, "profileDataUser", "myUserprofile"),
+        {
+          preferences: selectedPreferences,
+          updatedAt: serverTimestamp(),
+        },
+        { merge: true }
+      );
 
       console.log("✅ Preferences saved:", selectedPreferences);
 
       return selectedPreferences;
+
     } catch (error) {
       return rejectWithValue(error.message);
     }

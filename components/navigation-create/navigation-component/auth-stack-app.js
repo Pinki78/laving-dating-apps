@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import GetStartedIndexScreen from "../../../app/get-started";
 import LogInIndexScreen from "../../../app/log-in";
@@ -16,30 +16,20 @@ const AuthStack = createNativeStackNavigator();
 
 const AuthStackApp = () => {
 
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
-    const {  onboardingComplete, hasOpenedAppBefore} =
+  const { onboardingComplete, hasOpenedAppBefore } =
     useSelector((state) => state.authReducerStore);
 
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }} 
-    // initialRouteName={
-    //     hasOpenedAppBefore ? "log-in" : "get-started"
-    //   }
-    // initialRouteName={
-    //     !hasOpenedAppBefore
-    //       ? "get-started"
-    //       : !onboardingComplete
-    //       ? "preferences-pick"   // 🔥 KEY LINE
-    //       : "log-in"
-    //   }
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}
 
-initialRouteName={
+      initialRouteName={
         hasOpenedAppBefore ? "log-in" : "get-started"
       }
 
-      >
+    >
       <AuthStack.Screen
         name="get-started"
         component={GetStartedIndexScreen}
@@ -53,11 +43,11 @@ initialRouteName={
         component={CreatingNewUsersIndexScreen}
       />
 
-     {/* <AuthStack.Screen
+      <AuthStack.Screen
         name="preferences-pick"
         component={PreferListIndex}
-      /> */}
-       {/* <AuthStack.Screen
+      />
+      <AuthStack.Screen
         name="interests-pick"
         component={InterestsPickIndex}
       />
@@ -68,10 +58,10 @@ initialRouteName={
       <AuthStack.Screen
         name="location-pick"
         component={LocationPickIndex}
-      />  */}
+      /> 
 
 
-      
+
     </AuthStack.Navigator>
   );
 };

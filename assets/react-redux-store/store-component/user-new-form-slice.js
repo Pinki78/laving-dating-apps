@@ -65,11 +65,11 @@ export const createUser = createAsyncThunk(
 
       const user = userCredential.user;
 
-      // ✅ SAFE EMAIL DOC ID
       const emailId = data.email
         .trim()
         .toLowerCase()
         .replace(/[^a-zA-Z0-9]/g, "_");
+        const customId = `${emailId}_${user.uid}`;
 
       const userDoc = {
         uid: user.uid,
@@ -83,11 +83,14 @@ export const createUser = createAsyncThunk(
         createdAt: serverTimestamp(),
       };
 
-      await setDoc(doc(db, "users", emailId), userDoc);
+      await setDoc(doc(db, "users", customId), userDoc);
 
-      await signOut(auth);
+      // ❌ REMOVE SIGNOUT FROM HERE
 
-      return userDoc;
+      const { createdAt, ...safeUser } = userDoc;
+
+      return safeUser;
+
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
