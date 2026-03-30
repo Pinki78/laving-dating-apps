@@ -54,59 +54,59 @@ const LoginFrom = () => {
 
 
   const onSubmit = async ({ identity, password }) => {
-  try {
-    dispatch(setLoading(true));
+    try {
+      dispatch(setLoading(true));
 
-    const email = identity.trim().toLowerCase();
+      const email = identity.trim().toLowerCase();
 
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    const user = userCredential.user; // ✅ IMPORTANT
- 
-// ✅ MATCH signup logic exactly
-const emailId = user.email
-  .trim()
-  .toLowerCase()
-  .replace(/[^a-zA-Z0-9]/g, "_");
+      const user = userCredential.user; // ✅ IMPORTANT
 
-const docId = `${emailId}_${user.uid}`;
+      // ✅ MATCH signup logic exactly
+      const emailId = user.email
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-zA-Z0-9]/g, "_");
 
-const userSnap = await getDoc(
-  doc(db, "users", docId)
-);
+      const docId = `${emailId}_${user.uid}`;
 
-//     const userSnap = await getDoc(
-//       doc(db, "users", user.uid)      // ✅ FIXED
-//     );
+      const userSnap = await getDoc(
+        doc(db, "users", docId)
+      );
 
-    if (!userSnap.exists()) {
-      throw new Error("User data not found");
+      //     const userSnap = await getDoc(
+      //       doc(db, "users", user.uid)      // ✅ FIXED
+      //     );
+
+      if (!userSnap.exists()) {
+        throw new Error("User data not found");
+      }
+
+      const userData = userSnap.data();
+
+      const onboardingComplete = userData?.onboardingComplete;
+
+      dispatch(setOnboardingComplete(onboardingComplete));
+
+      if (!onboardingComplete) {
+        navigation.replace("preferences-pick");
+      } else {
+        dispatch(setIsAuthenticated(true));
+      }
+
+    } catch (error) {
+      Alert.alert("Login Error", error.message);
+      console.log("Login Error", error.message);
+
+    } finally {
+      dispatch(setLoading(false));
     }
-
-    const userData = userSnap.data();
-
-    const onboardingComplete = userData?.onboardingComplete;
-
-    dispatch(setOnboardingComplete(onboardingComplete));
-
-    if (!onboardingComplete) {
-      navigation.replace("preferences-pick");
-    } else {
-      dispatch(setIsAuthenticated(true));
-    }
-
-  } catch (error) {
-    Alert.alert("Login Error", error.message);
-    console.log("Login Error", error.message);
-    
-  } finally {
-    dispatch(setLoading(false));
-  }
-};
+  };
 
 
   return (

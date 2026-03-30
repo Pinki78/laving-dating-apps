@@ -8,7 +8,7 @@ import {
   ActivityIndicator
 } from "react-native";
 
-import React, { useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -19,8 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import PressableIconButtonGradient from "../../../components/button/pressable-gradient-icon-button";
 import COLORS from "../../../assets/style/color";
-
-
 
 import {
   fetchSignup,
@@ -34,14 +32,15 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Alert } from "react-native";
 import { setOnboardingComplete, setHasOpenedAppBefore, setIsAuthenticated, setIsSigningUp } from "../../../assets/react-redux-store/store-component/auth-slice";
-import { auth, db } from "../../../assets/firebase/firebaseConfig";
-import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
-import { signOut } from "firebase/auth";
+import { auth, } from "../../../assets/firebase/firebaseConfig";
 
+import { signOut } from "firebase/auth";
+import PhoneInput from "react-native-phone-number-input";
 
 
 const NewUserForm = () => {
-
+  const phoneRef = useRef(null);
+  const [countryCode, setCountryCode] = useState("IN");
   const { Formik } = formik;
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -92,8 +91,12 @@ const NewUserForm = () => {
 
       if (field.type === "phone") {
         validator = validator
-          .matches(/^[0-9]+$/, "Only numbers allowed")
-          .length(10, "Phone must be 10 digits");
+          .matches(/^\+?[0-9]+$/, "Only numbers allowed")
+          .test("valid-phone", "Invalid phone number", function (value) {
+            if (!value) return false;
+
+            return phoneRef.current?.isValidNumber(value);
+          });
       }
 
       if (field.type) {
@@ -116,6 +119,11 @@ const NewUserForm = () => {
   if (loading || usersCreateForm.length === 0) {
     return <ActivityIndicator />;
   }
+
+
+  // if (loading ) {
+  //   return <ActivityIndicator />;
+  // }
 
   return (
     <>
@@ -159,7 +167,9 @@ const NewUserForm = () => {
             handleSubmit,
             handleBlur,   // ⭐ add this
             setFieldValue,
-            setFieldTouched
+            setFieldTouched,
+            setFieldError   // ✅ ADD THIS
+
           }) => (
             <View>
 
@@ -323,32 +333,48 @@ const NewUserForm = () => {
                 /* ---------- PHONE ---------- */
 
                 if (field.type === "phone") {
+                  // const phoneInputRef = useRef(null);
                   return (
                     <View key={field.id} style={styles.inputWrapper}>
-                      <TextInput
-                        style={[
-                          styles.input,
-                          (touched[field.id] || submitCount > 0) &&
-                          errors[field.id] && { borderColor: "red" }
-                        ]}
-                        placeholder={field.placeholder}
-                        placeholderTextColor={COLORS.greyish}
-                        value={values[field.id]}
-                        onBlur={handleBlur(field.id)}
-                        keyboardType="number-pad"
-                        onChangeText={(text) => {
-                          const cleaned = text.replace(/[^0-9]/g, "");
 
-                          if (cleaned.length <= 10) {
-                            setFieldValue(field.id, cleaned);
-                          }
+
+
+                      <PhoneInput
+                        ref={phoneRef}
+                        defaultCode="IN"
+                        layout="second"
+                        value={values[field.id] || ""}
+
+                        withDarkTheme
+                        withCountryNameButton   // ✅ shows "India"
+
+                        onChangeFormattedText={(text) => {
+                          setFieldValue(field.id, text);
+                          setFieldTouched(field.id, true);
                         }}
+
+                        onPressFlag={() => setCountryPickerVisible(true)}
+                        onChangeCountry={(country) => {
+                          setCountryCode(country.cca2);
+                        }}
+                        textInputProps={{
+                          maxLength: countryCode === "IN" ? 10 : 15
+                        }}
+                        // containerStyle={styles.phoneContainer}
+                         containerStyle={[
+                            styles.phoneContainer,
+                            (touched[field.id] || submitCount > 0) &&
+                              errors[field.id] && { borderColor: "red" }
+                          ]}
+                        flagButtonStyle={styles.flagButton}
+                        textContainerStyle={styles.textContainer}
+                        textInputStyle={styles.phoneTextInput}
                       />
 
-                      {touched[field.id] && errors[field.id] && (
-                        <Text style={styles.error}>
-                          {errors[field.id]}
-                        </Text>
+
+
+                      {(touched[field.id] || submitCount > 0) && errors[field.id] && (
+                        <Text style={styles.error}>{errors[field.id]}</Text>
                       )}
                     </View>
                   );
@@ -398,6 +424,52 @@ const NewUserForm = () => {
 export default NewUserForm;
 
 const styles = StyleSheet.create({
+
+
+  textContainer: {
+    flex: 1,
+    backgroundColor: "transparent",
+    justifyContent: "center",
+    paddingVertical: 0,
+    paddingEnd: 6,
+    fontFamily: "Urbanist_600SemiBold",
+  },
+
+  phoneTextInput: {
+    height: 48,
+    paddingVertical: 0,
+    fontFamily: "Urbanist_600SemiBold",
+
+  },
+  flagButton: {
+    width: 70,              // controls flag box width
+    borderRightWidth: 1,
+    borderRightColor: COLORS.greyCcc,
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: "Urbanist_600SemiBold",
+  },
+  phoneContainer: {
+    width: "100%",
+    height: 48,
+    borderWidth: 1,
+    borderColor: COLORS.greyCcc,
+    borderRadius: 6,
+    backgroundColor: "transparent",
+    overflow: "hidden", // ⭐ important for rounded corners
+    fontFamily: "Urbanist_600SemiBold",
+    paddingHorizontal: 10,
+  },
+
+  phoneTextContainer: {
+    flex: 1, // ⭐ important
+    backgroundColor: "transparent",
+    paddingVertical: 0,
+    paddingHorizontal: 8,
+    justifyContent: "center",
+  },
+
+
   container: {
     padding: 20,
   },
@@ -465,4 +537,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
   },
+
+
 });

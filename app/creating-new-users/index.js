@@ -1,4 +1,5 @@
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { useLayoutEffect, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -47,21 +48,15 @@ const CreatingNewUsersIndexScreen = () => {
           <ScrollView
             keyboardShouldPersistTaps="handled"
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
+             contentContainerStyle={{
+              flexGrow: 1, // ⭐ IMPORTANT
               paddingBottom: keyboardHeight + 20,
             }}
           >
             <LogoText
               LogoHeader="Welcome Back Sign In"
               Summary="Sign In to continue"
-            //   headerStyle={{
-            //     fontFamily: 'Urbanist_600SemiBold',
-            //     fontSize: 25,
-            //   }}
-            //   summaryStyle={{
-            //     fontSize: 14,
-            //     fontFamily: 'Urbanist_600SemiBold',
-            //   }}
+            
             />
 
             <UsersModule />

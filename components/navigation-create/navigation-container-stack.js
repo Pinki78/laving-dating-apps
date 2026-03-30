@@ -43,76 +43,12 @@ const NavigationContainerStack = () => {
 
 
 
-  const { isSigningUp, isAuthenticated, authChecked, loading, onboardingComplete, hasOpenedAppBefore, } =
+  const { isSigningUp, isAuthenticated, } =
     useSelector((state) => state.authReducerStore);
 
 
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (user) => {
-  //     if (!user) {
-  //       dispatch(setIsAuthenticated(false));
-  //       return;
-  //     }
-
-  //     const docId = `${user.email}_${user.uid}`;
-  //     const userRef = doc(db, "users", docId);
-  //     const userSnap = await getDoc(userRef);
-
-  //     if (!userSnap.exists()) {
-  //       dispatch(setIsAuthenticated(false));
-  //       return;
-  //     }
-
-  //     const userData = userSnap.data();
-
-  //     // ✅ SET BOTH
-  //     dispatch(setOnboardingComplete(userData.onboardingComplete));
-  //     dispatch(setIsAuthenticated(true)); // ✅ ALWAYS TRUE IF LOGGED IN
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
-
-  //     const fontsLoaded = LoadFonts();
-
-  //    if (!fontsLoaded || loading || isAuthenticated === null) {
-  //     return (
-  //       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-  //         <ActivityIndicator size="large" />
-  //       </View>
-  //     );
-
-  //   }
   const fontsLoaded = LoadFonts();
 
-  // ✅ AUTH STATE LISTENER
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, async (user) => {
-  //     if (!user) {
-  //       dispatch(setIsAuthenticated(false));
-  //       dispatch(setOnboardingComplete(false));
-  //       return;
-  //     }
-
-  //     const email = user.email.toLowerCase();
-  //     const emailId = email.replace(/[^a-zA-Z0-9]/g, "_");
-
-  //     const userSnap = await getDoc(doc(db, "users", emailId));
-
-  //     if (!userSnap.exists()) {
-  //       dispatch(setIsAuthenticated(false));
-  //       return;
-  //     }
-
-  //     const userData = userSnap.data();
-
-  //     dispatch(setOnboardingComplete(userData.onboardingComplete ?? false));
-  //     dispatch(setIsAuthenticated(true));
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
 
   // ✅ AUTH LISTENER
   useEffect(() => {
