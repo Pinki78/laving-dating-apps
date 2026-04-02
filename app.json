@@ -22,7 +22,13 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.alankita.mydatingapp"
+      "package": "com.alankita.mydatingapp",
+      "softwareKeyboardLayoutMode": "pan",
+       "edgeToEdgeEnabled": false,        // ✅ Keep
+  "navigationBar": {
+    "visible": "visible",
+    "backgroundColor": "#f5f5f5"     // ✅ Works without the plugin
+  }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,7 +42,6 @@
           "calendarPermission": "The app needs to access your calendar."
         }
       ],
-      
       [
         "expo-image-picker",
         {
@@ -51,8 +56,19 @@
           }
         }
       ],
+      [
+        "expo-navigation-bar",
+        {
+          "enforceContrast": true,
+          "barStyle": "light",
+          "visibility": "visible",
+          "backgroundColor": "#ffffff",
+      
+        }
+      ],
       "expo-router",
       "expo-maps"
+      // "react-native-edge-to-edge"
     ]
   }
 }

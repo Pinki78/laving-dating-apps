@@ -1,6 +1,5 @@
 import {
   NavigationContainer,
-  useNavigationState,
 } from "@react-navigation/native";
 
 import { View, ActivityIndicator } from "react-native";
@@ -20,13 +19,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../assets/firebase/firebaseConfig";
 import { useEffect, useState, useRef } from "react";
 import { uploadProfilesFirebase, fetchLoadProfiles } from "../../assets/react-redux-store/store-component/profile-data-slice";
-import PreferStack from "./navigation-component/PreferStack";
-
-
-
-
-
-
+// import PreferStack from "./navigation-component/PreferStack";
 
 
 const Stack = createNativeStackNavigator();
@@ -62,6 +55,8 @@ const NavigationContainerStack = () => {
 
         return;
       }
+
+      
 
       const emailId = user.email
         .toLowerCase()

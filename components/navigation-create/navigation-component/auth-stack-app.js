@@ -23,7 +23,7 @@ const AuthStackApp = () => {
     useSelector((state) => state.authReducerStore);
 
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}
+    <AuthStack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}
 
       initialRouteName={
         hasOpenedAppBefore ? "log-in" : "get-started"

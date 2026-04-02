@@ -27,9 +27,6 @@ const PreferencesList = () => {
     useSelector((state) => state. PreferencesReducerStore);
 
 
-
-
-
   // ✅ Extract unique preferences safely
   const preferences = [
     ...new Set(

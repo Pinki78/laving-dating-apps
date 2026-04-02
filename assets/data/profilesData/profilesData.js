@@ -58,6 +58,12 @@ export const createProfiles = (
   gallery = [],
    PreferencesType= '',// default
 ) => {
+
+  // const imagePath = `/image/profiles/${categories[0]
+  //   .toLowerCase()
+  //   .replace(/\s+/g, "")}/${image.toLowerCase().replace(/\s+/g, "")}.jpg`;
+
+
   return {
     id: getIdProfile(title),
     title,
@@ -97,7 +103,7 @@ ProInterests: interestsName.map((item) => ({
 export const profiles_data = [
     createProfiles(
         "Aarav",
-       require('../../image/boys/aarav.jpg'),
+       require('../../image/profiles/boys/aarav.jpg'),
         "28",
         "Man",
         "IT Software",
@@ -109,16 +115,16 @@ export const profiles_data = [
         ["Travelling", "Photography", "Fitness"],
         120,
         [
-            '../../image/boys/aarav1.jpg',
-            '../../image/boys/aarav2.jpg',
-            '../../image/boys/aarav3.jpg'
+            '../../image/profiles/boys/aarav1.jpg',
+            '../../image/profiles/boys/aarav2.jpg',
+            '../../image/profiles/boys/aarav3.jpg'
         ],
         "Somthing casual"
     ),
 
     createProfiles(
         "Bharat",
-         require('../../image/boys/bharat.jpg'),
+         require('../../image/profiles/boys/bharat.jpg'),
         "30",
         "Man",
         "IT Software",
@@ -130,16 +136,16 @@ export const profiles_data = [
         ["Travelling", "Photography", "Fitness"],
         110,
         [
-            '../../image/boys/aarav1.jpg',
-            '../../image/boys/aarav2.jpg',
-            '../../image/boys/aarav3.jpg'
+            '../../image/profiles/boys/aarav1.jpg',
+            '../../image/profiles/boys/aarav2.jpg',
+            '../../image/profiles/boys/aarav3.jpg'
         ],
         "A relationship"
     ),
 
     createProfiles(
         "Chaitanya",
-         require('../../image/boys/chaitanya.jpg'),
+         require('../../image/profiles/boys/chaitanya.jpg'),
         "32",
         "Man",
         "IT Software",
@@ -151,16 +157,16 @@ export const profiles_data = [
         ["Travelling", "Photography", "Fitness"],
         130,
         [
-            '../../image/boys/aarav1.jpg',
-            '../../image/boys/aarav2.jpg',
-            '../../image/boys/aarav3.jpg'
+            '../../image/profiles/boys/aarav1.jpg',
+            '../../image/profiles/boys/aarav2.jpg',
+            '../../image/profiles/boys/aarav3.jpg'
         ],
         'I’m not sure yet'
     ),
 
     createProfiles(
         "Ananya",
-          require('../../image/girls/ananya.jpg'),
+          require('../../image/profiles/girls/ananya.jpg'),
         "26",
         "Woman",
         "Graphic Designer",
@@ -172,16 +178,16 @@ export const profiles_data = [
         ["Drawing", "Travelling", "Music"],
         118,
         [
-            '../../image/girls/ananya1.jpg',
-            '../../image/girls/ananya2.jpg',
-            '../../image/girls/ananya3.jpg'
+            '../../image/profiles/girls/ananya1.jpg',
+            '../../image/profiles/girls/ananya2.jpg',
+            '../../image/profiles/girls/ananya3.jpg'
         ],
         'Prefer not to say'
     ),
 
     createProfiles(
         "Riya",
-         require('../../image/girls/riya.jpg'),
+         require('../../image/profiles/girls/riya.jpg'),
         "24",
         "Woman",
         "Digital Marketer",
@@ -193,16 +199,16 @@ export const profiles_data = [
         ["Dancing", "Reading", "Yoga"],
         142,
         [
-            '../../image/girls/riya1.jpg',
-            '../../image/girls/riya2.jpg',
-            '../../image/girls/riya3.jpg'
+            '../../image/profiles/girls/riya1.jpg',
+            '../../image/profiles/girls/riya2.jpg',
+            '../../image/profiles/girls/riya3.jpg'
         ],
         "A relationship"
     ),
 
     createProfiles(
         "Suhana",
-          require('../../image/girls/suhana.jpg'),
+          require('../../image/profiles/girls/suhana.jpg'),
         "27",
         "Woman",
         "Fashion Stylist",
@@ -214,9 +220,9 @@ export const profiles_data = [
         ["Fashion", "Photography", "Cooking"],
         125,
         [
-            '../../image/girls/suhana1.jpg',
-            '../../image/girls/suhana2.jpg',
-            '../../image/girls/suhana3.jpg'
+            '../../image/profiles/girls/suhana1.jpg',
+            '../../image/profiles/girls/suhana2.jpg',
+            '../../image/profiles/girls/suhana3.jpg'
         ],
         "A relationship"
     ),
