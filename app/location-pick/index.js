@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context'
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useLayoutEffect, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from '@react-navigation/native'
@@ -91,7 +91,7 @@ const LocationPickIndex = () => {
       Alert.alert("Error", error.message);
     }
   };
-
+  
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

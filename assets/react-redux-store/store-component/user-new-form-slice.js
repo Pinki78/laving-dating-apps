@@ -79,6 +79,7 @@ export const createUser = createAsyncThunk(
         role: "user",
         phone: data.phone || "",
         dob: data.dob || "",
+        gender: data.gender || "",
         onboardingComplete: false,
         createdAt: serverTimestamp(),
       };

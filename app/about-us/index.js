@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 const AboutIndex = ({route}) => {
-     const { profileId , profile} = route.params;
+    const { profile, myProfile } = route?.params || {};
   return (
     <View>
       <Text>AboutIndex</Text>

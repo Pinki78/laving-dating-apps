@@ -89,7 +89,7 @@ const NavigationContainerStack = () => {
   }
 
 
-
+// console.log("Checking route in:", "ComponentName", route);
   return (
     <>
 

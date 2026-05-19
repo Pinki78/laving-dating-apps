@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useLayoutEffect, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from '@react-navigation/native'
@@ -24,7 +24,7 @@ const UploadPhotoScreenIndex = () => {
   }, [navigation])
 
   const handleBack = () => {
-    navigation.navigate("interests-pick");
+    navigation.navigate("marial-status-pick");
   };
 
 

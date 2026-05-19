@@ -26,7 +26,7 @@ const PreferencesList = () => {
   const {selectedPreferences } =
     useSelector((state) => state. PreferencesReducerStore);
 
-
+    
   // ✅ Extract unique preferences safely
   const preferences = [
     ...new Set(
@@ -72,6 +72,9 @@ const renderItem = ({ item }) => {
           data={preferences}
           keyExtractor={(item, index) => `${item}-${index}`}
           renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          nestedScrollEnabled={true}
         />
 
         <PressableIconButtonGradient

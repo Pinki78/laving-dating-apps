@@ -11,6 +11,7 @@ import PreferListIndex from "../../../app/preferences-pick";
 import InterestsPickIndex from "../../../app/interests-pick";
 import UploadPhotoScreenIndex from "../../../app/upload-your-photo";
 import LocationPickIndex from "../../../app/location-pick";
+import MarialStatusindex from "../../../app/marial-status";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -30,7 +31,7 @@ const AuthStackApp = () => {
       }
 
     >
-      <AuthStack.Screen
+     <AuthStack.Screen
         name="get-started"
         component={GetStartedIndexScreen}
       />
@@ -50,7 +51,13 @@ const AuthStackApp = () => {
       <AuthStack.Screen
         name="interests-pick"
         component={InterestsPickIndex}
+      /> 
+
+      <AuthStack.Screen
+        name="marial-status-pick"
+        component={MarialStatusindex}
       />
+
       <AuthStack.Screen
         name="upload-your-photo"
         component={UploadPhotoScreenIndex}

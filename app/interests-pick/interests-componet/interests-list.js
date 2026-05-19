@@ -4,6 +4,7 @@ import {
     StyleSheet,
     Pressable,
     FlatList,
+    
 } from "react-native";
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,8 +15,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 import PressableIconButtonGradient from "../../../components/button/pressable-gradient-icon-button";
 import { saveInterests, setSelectedInterests, toggleInterest } from "../../../assets/react-redux-store/store-component/interests-data-slice";
-
-
 
 
 const InterestsList = () => {
@@ -75,6 +74,9 @@ const InterestsList = () => {
                 renderItem={renderItem}
                 numColumns={2}
                 contentContainerStyle={{ padding: 12 }}
+                showsVerticalScrollIndicator={false}
+                scrollEnabled={false}
+                 nestedScrollEnabled={true}
             />
 
             <PressableIconButtonGradient
@@ -84,9 +86,9 @@ const InterestsList = () => {
                     try {
                         await dispatch(saveInterests()).unwrap();
 
-                        console.log("✅ Saved successfully");
+                        // console.log("✅ Saved successfully");
 
-                        navigation.navigate("upload-your-photo"); // 👈 change this
+                        navigation.navigate("marial-status-pick"); // 👈 change this
                     } catch (err) {
                         console.log("❌ Error:", err);
                         Alert.alert("Error", err);

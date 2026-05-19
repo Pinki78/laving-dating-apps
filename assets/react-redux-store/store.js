@@ -8,7 +8,7 @@ import preferencesSlice from "../react-redux-store/store-component/preferences-s
 import interestsSlice from "../react-redux-store/store-component/interests-data-slice"
 import PhotosPickeSlice from "../react-redux-store/store-component/photos-picke-slice"
 import  locationDataPickeSlice from "../react-redux-store/store-component/location-data-picke-slice"
-
+import marialStatusSlice from "../react-redux-store/store-component/marial-status-slice"
 
 export const store = configureStore({
     reducer: {
@@ -20,6 +20,7 @@ export const store = configureStore({
         InterestsReducerStore:interestsSlice,
        PhotosPickeReducerStore:PhotosPickeSlice,
       LocationReducerStore:locationDataPickeSlice,
+      MarialStatusReducerStore:marialStatusSlice,
 
     },
 });

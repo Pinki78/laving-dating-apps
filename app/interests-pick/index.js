@@ -1,5 +1,5 @@
-import { StyleSheet, View } from 'react-native'
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context'
+import { StyleSheet, View , ScrollView} from 'react-native'
+import { SafeAreaView,} from 'react-native-safe-area-context'
 import { useLayoutEffect, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigation } from '@react-navigation/native'
@@ -32,6 +32,7 @@ const InterestsPickIndex = () => {
     <>
      
     <SafeAreaView style={[styles.container,]}>
+      <ScrollView showsHorizontalScrollIndicator={false}>
       <BackPreviousPaga 
          icon="arrow-back-circle-outline"
 
@@ -51,6 +52,8 @@ const InterestsPickIndex = () => {
             <InterestsList />
            
           </View>
+
+          </ScrollView>
 
       </SafeAreaView>
     </>
